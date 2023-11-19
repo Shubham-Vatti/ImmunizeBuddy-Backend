@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "905844466672",
+    "project_id": "immunizebuddy-18891",
+    "storage_bucket": "immunizebuddy-18891.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:905844466672:android:5e9b41d1fbf0c6acd93335",
+        "android_client_info": {
+          "package_name": "com.immunizebuddy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "905844466672-g4n4rmoauvgs1cuan5g0aqno51kid232.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.immunizebuddy",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "905844466672-vshm1uvfm1d6sfplg11v0hp6plqv6a6h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAqeNBkNiDXR5EKCuXqncMigGxqUcw_Y30"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "109957920481336318662",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
