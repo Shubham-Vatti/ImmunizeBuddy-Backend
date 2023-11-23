@@ -5,7 +5,9 @@ const User=new mongoose.Schema({
     uid:String,
     name:String,
     email:String,
-    role:String
+    role:String,
+    is_parent_registered:{type:Number,default:0},
+    is_child_registered:{type:Number,default:0}
 })
 
 module.exports=mongoose.model('User',User)
