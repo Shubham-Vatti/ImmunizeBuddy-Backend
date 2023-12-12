@@ -7,7 +7,8 @@ const bycrypt = require('bcrypt');
 // const mongoose = require('mongoose');
 const validator = require('validator');
 // const jwt = require('jsonwebtoken');
-
+const dotenv=require('dotenv')
+dotenv.config()
 const CLIENT_ID = '109957920481336318662'; // Replace with your Google OAuth client ID
 const client = new OAuth2Client(CLIENT_ID);
 
@@ -21,23 +22,22 @@ module.exports.Google_OauthLogin=async(req,res)=>{
 
         const payload = ticket.getPayload();
         const userDetails={
-            uid: payload.sub,
+            sub: payload.sub,
             email: payload.email,
             name: payload.name,
             role:"user"
         };
         const Usermodal=new User({
-          _id: new mongoose.Types.ObjectId,
-          uid:payload.uid,
+          _id:new mongoose.Types.ObjectId(),
           name: payload.name,
           email:payload.email,
-          is_parent_registered:0,
-          is_child_registered:0,
+          is_parentregistered:false,
+          is_childregistered:false,
           role:"user"
         })
         const token = jwt.sign(userDetails,
-            "c1e79ab27f7da8e4e9a7dbb83283c2a7e2270aab34d66915df3247ec0c3b91d1"
-            ,{expiresIn:'48h'});
+            process.env.PRIVATE_SECRET_KEY
+            ,{expiresIn:'48h'},{"alg": "HS256"});
         User.find({email:payload.email})
         .then((resu)=>{
             if(resu.length>=1)
@@ -63,8 +63,10 @@ module.exports.Google_OauthLogin=async(req,res)=>{
         })
     }
     catch (err) {
+        console.log(err)
         res.status(401).json({
             status:401,
+            Error:err.message,
             error: 'Invalid Google ID token',
          });
     }
