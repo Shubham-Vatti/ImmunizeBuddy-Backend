@@ -1,7 +1,7 @@
 const express = require('express');
 const Usermailrouter = express.Router();
 const Usermail = require('../Models/Usermail')
-const bycrypt = require('bcrypt');
+// const bycrypt = require('bcrypt');
 const mongoose = require('mongoose');
 const validator = require('validator');
 const jwt = require('jsonwebtoken');
