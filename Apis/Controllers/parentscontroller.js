@@ -3,6 +3,15 @@ const parentsmodel = require('../Models/parentsmodel');
 const User = require('../Models/User');
 // const BSON =require('bson')
 const Objectid=require('mongodb').ObjectId
+const cloudinary=require('cloudinary').v2
+// import {v2 as cloudinary} from 'cloudinary';
+          
+cloudinary.config({ 
+  cloud_name: 'dl9ezkm0g', 
+  api_key: '418237271262539', 
+  api_secret: '9H5iRm23AyYRFNPiXDCqxCGz_ng' 
+});
+
 
 const HandleError = (err) => {
     if (err.message.includes('parentsmodel validation failed')) {
@@ -15,38 +24,53 @@ const HandleError = (err) => {
 
 module.exports.parents_registration = (req, res) => {
     try {
+        const files=req.files.profile_pic;
+        console.log(files)
         const data=req.UserData;
         console.log('--user id--',typeof(data.sub))
         parentsmodel.find({user_id:data.sub}).then((resul)=>{
             console.log(resul)
             if(!resul.length>0)
             {
-                const parents_form = new parentsmodel({
-                    _id: new mongoose.Types.ObjectId,
-                    user_id: data.sub,
-                    your_gender: req.body.your_gender,
-                    your_name: req.body.your_name,
-                    partner_name: req.body.partner_name,
-                    address: req.body.address,
-                    mobile_no: req.body.mobile_no,
-                    email_id: req.body.email_id
-                });
-                parents_form.save()
-                    .then((result) => {
-                        res.status(200).json({
-                            status: 200,
-                            type: "Parents data added successfully",
-                            parent_data: result
-                        })
+                cloudinary.uploader.upload(files.tempFilePath,(err,result)=>{
+                  if(err)
+                  {
+                    res.status(420).json({
+                      status:420,
+                      type:err.message
                     })
-                    .catch((err) => {
-                        // HandleError(err)
-                        res.status(500).json({
-                            status: 500,
-                            Error: err,
-                            type: "error while adding Parents data"
+                  }
+                  else if(result)
+                  {
+                    const parents_form = new parentsmodel({
+                        _id: new mongoose.Types.ObjectId,
+                        profile_pic:result.secure_url,
+                        user_id: data.sub,
+                        your_gender: req.body.your_gender,
+                        your_name: req.body.your_name,
+                        partner_name: req.body.partner_name,
+                        address: req.body.address,
+                        mobile_no: req.body.mobile_no,
+                        email_id: req.body.email_id
+                    });
+                    parents_form.save()
+                        .then((result) => {
+                            res.status(200).json({
+                                status: 200,
+                                type: "Parents data added successfully",
+                                parent_data: result
+                            })
                         })
-                    })
+                        .catch((err) => {
+                            // HandleError(err)
+                            res.status(500).json({
+                                status: 500,
+                                Error: err,
+                                type: "error while adding Parents data"
+                            })
+                        })
+                  }})
+
             }
             else{
                 res.status(500).json({
@@ -71,6 +95,63 @@ module.exports.parents_registration = (req, res) => {
             status: 500,
             type: "error while adding Parents data"
         })
+    }
+}
+
+
+module.exports.parents_details_update=(req,res)=>{
+    try{
+        const files=req.files.profile_pic;
+        console.log(files)
+        cloudinary.uploader.upload(files.tempFilePath,(err,result)=>{
+          if(err)
+          {
+            res.status(420).json({
+              status:420,
+              type:err.message
+            })
+          }
+          else if(result)
+          {
+            const data=req.UserData;
+            console.log('--user id--',data.sub)
+            parentsmodel.findOneAndUpdate({user_id:data.sub},{
+                $set:{
+                    // _id: new mongoose.Types.ObjectId,
+                    profile_pic:result.secure_url,
+                    user_id: data.sub,
+                    your_gender: req.body.your_gender,
+                    your_name: req.body.your_name,
+                    partner_name: req.body.partner_name,
+                    address: req.body.address,
+                    mobile_no: req.body.mobile_no,
+                    email_id: req.body.email_id
+                }
+            })
+            .then((result)=>{
+                res.status(200).json({
+                    status:200,
+                    type:"Successfully updated parents details",
+                    updated_details:result
+                })
+            })
+            .catch((err)=>{
+                console.log(err)
+                res.status(500).json({
+                    status: 500,
+                    type: "error while updating Parents data"
+                })
+            })
+          }})
+    }
+    catch(err)
+    {
+        console.log(err)
+        res.status(500).json({
+            status: 500,
+            type: "error while updating Parents data"
+        })
+
     }
 }
 

@@ -13,7 +13,8 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const Usermailrouter=require('./Apis/Routes/Usermail')
 const fileUpload=require('express-fileupload')
-const ChildstateRouter=require('./Apis/Routes/childstateRoute')
+const ChildstateRouter=require('./Apis/Routes/childstateRoute');
+const blogrouter = require('./Apis/Routes/blogrouter');
 
 app.use(cors())
 mongoose.connect('mongodb+srv://immunizebuddy:BjRY5Evy5MaBctH6@immunizebuddy-server.53jq24g.mongodb.net/?retryWrites=true&w=majority')
@@ -35,6 +36,7 @@ app.use('/state-lst',ChildstateRouter)
 app.use('/doctor-Store',childdoctorroute)
 app.use('/Vaccine-Details-list',VaccineRouter)
 app.use('/Child-Api',ChildRouter)
+app.use('/Blogs-Api',blogrouter)
 app.use('/Parents-Api',ParentsRouter)
 app.use('/UserAuth/Email',Usermailrouter)
 app.use((req, res, next) => {
