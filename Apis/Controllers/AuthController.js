@@ -14,6 +14,7 @@ const client = new OAuth2Client(CLIENT_ID);
 
 module.exports.Google_OauthLogin=async(req,res)=>{
     const { idToken } = req.body;
+    console.log('--id--',idToken)
     try {
         const ticket = await client.verifyIdToken({
             idToken,
@@ -72,6 +73,32 @@ module.exports.Google_OauthLogin=async(req,res)=>{
     }
 
 }
+
+
+module.exports.Update_Google_Oauth_Login=async(req,res)=>{
+    const data = req.params.id;
+    // const _id=data.sub;
+    console.log(typeof(data),'--',data)
+    User.findByIdAndUpdate(data,req.body)
+    .then((result)=>{
+        res.status(200).json({
+            status: 200,
+            type:"sucessfully Data saved",
+            updated_data:result
+        })
+    })
+    .catch((err)=>{
+        console.log(err)
+    })
+    // const updatedata=await User.findByIdAndUpdate(_id,req.body)
+    //     res.status(200).json({
+    //         status:200,
+    //         type:"User Profile Status updated",
+    //         Result:updatedata
+    // })
+}
+
+
 
 
 module.exports.Useremail_Register=(req,res)=>{

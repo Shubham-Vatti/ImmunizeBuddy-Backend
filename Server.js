@@ -15,6 +15,8 @@ const Usermailrouter=require('./Apis/Routes/Usermail')
 const fileUpload=require('express-fileupload')
 const ChildstateRouter=require('./Apis/Routes/childstateRoute');
 const blogrouter = require('./Apis/Routes/blogrouter');
+const babyvaccineapprovalroute = require('./Apis/Routes/babyvaccineapprovalroute');
+const requireauth = require('./Apis/Middleware/auth-middleware');
 
 app.use(cors())
 mongoose.connect('mongodb+srv://immunizebuddy:BjRY5Evy5MaBctH6@immunizebuddy-server.53jq24g.mongodb.net/?retryWrites=true&w=majority')
@@ -33,6 +35,7 @@ app.use(fileUpload({
     useTempFiles:true
 }))
 app.use('/state-lst',ChildstateRouter)
+app.use('/Approval-Reject',babyvaccineapprovalroute)
 app.use('/doctor-Store',childdoctorroute)
 app.use('/Vaccine-Details-list',VaccineRouter)
 app.use('/Child-Api',ChildRouter)
