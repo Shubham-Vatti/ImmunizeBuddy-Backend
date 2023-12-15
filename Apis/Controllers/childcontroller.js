@@ -89,7 +89,7 @@ module.exports.child_registration = (req, res) => {
                             // const data=req.UserData;
                             const child_form = new childmodel({
                                 user_id: data.sub,
-                                child_profile_pic: result.secure_url,
+                                // child_profile_pic: result.secure_url,
                                 child_name: req.body.child_name,
                                 child_DOB: req.body.child_DOB,
                                 child_TOB: req.body.child_TOB,
