@@ -24,27 +24,27 @@ const HandleError = (err) => {
 
 module.exports.parents_registration = (req, res) => {
     try {
-        // const files=req.files.profile_pic;
-        // console.log(files)
+        const files=req.files.profile_pic;
+        console.log(files)
         const data=req.UserData;
         console.log('--user id--',typeof(data.sub))
         parentsmodel.find({user_id:data.sub}).then((resul)=>{
             console.log('--result--',resul)
             if(!resul.length>0)
             {
-                // cloudinary.uploader.upload(files.tempFilePath,(err,result)=>{
-                //   if(err)
-                //   {
-                //     res.status(420).json({
-                //       status:420,
-                //       type:err.message
-                //     })
-                //   }
-                //   else if(result)
-                //   {
+                cloudinary.uploader.upload(files.tempFilePath,(err,result)=>{
+                  if(err)
+                  {
+                    res.status(420).json({
+                      status:420,
+                      type:err.message
+                    })
+                  }
+                  else if(result)
+                  {
                     const parents_form = new parentsmodel({
                         _id: new mongoose.Types.ObjectId,
-                        // profile_pic:result.secure_url,
+                        profile_pic:result.secure_url,
                         user_id: data.sub,
                         your_gender: req.body.your_gender,
                         your_name: req.body.your_name,
@@ -69,7 +69,7 @@ module.exports.parents_registration = (req, res) => {
                                 type: "error while adding Parents data in registration"
                             })
                         })
-                //   }})
+                  }})
 
             }
             else{
@@ -95,7 +95,6 @@ module.exports.parents_registration = (req, res) => {
         res.status(500).json({
             status: 500,
             Error: Err.message,
-            // files,
             type: "error while adding Parents data outside"
         })
     }
@@ -104,24 +103,24 @@ module.exports.parents_registration = (req, res) => {
 
 module.exports.parents_details_update=(req,res)=>{
     try{
-        // const files=req.files.profile_pic;
-        // console.log(files)
-        // cloudinary.uploader.upload(files.tempFilePath,(err,result)=>{
-        //   if(err)
-        //   {
-        //     res.status(420).json({
-        //       status:420,
-        //       type:err.message
-        //     })
-        //   }
-        //   else if(result)
-        //   {
+        const files=req.files.profile_pic;
+        console.log(files)
+        cloudinary.uploader.upload(files.tempFilePath,(err,result)=>{
+          if(err)
+          {
+            res.status(420).json({
+              status:420,
+              type:err.message
+            })
+          }
+          else if(result)
+          {
             const data=req.UserData;
             console.log('--user id--',data.sub)
             parentsmodel.findOneAndUpdate({user_id:data.sub},{
                 $set:{
                     // _id: new mongoose.Types.ObjectId,
-                    // profile_pic:result.secure_url,
+                    profile_pic:result.secure_url,
                     user_id: data.sub,
                     your_gender: req.body.your_gender,
                     your_name: req.body.your_name,
@@ -145,7 +144,7 @@ module.exports.parents_details_update=(req,res)=>{
                     type: "error while updating Parents data"
                 })
             })
-        //   }})
+          }})
     }
     catch(err)
     {

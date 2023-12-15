@@ -2,7 +2,7 @@ const mongoose=require('mongoose');
 
 const childmodel=new mongoose.Schema({
     user_id:{type:String, required:[true,'uid required'],ref:'User'},
-    // child_profile_pic:{type:String},
+    child_profile_pic:{type:String},
     child_gender:{type:String, required:true},
     child_name:{type:String, required:true},
     child_DOB:{type:String, required:true},
