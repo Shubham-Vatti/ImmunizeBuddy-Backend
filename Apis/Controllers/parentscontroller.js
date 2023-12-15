@@ -65,8 +65,8 @@ module.exports.parents_registration = (req, res) => {
                             // HandleError(err)
                             res.status(500).json({
                                 status: 500,
-                                Error: err,
-                                type: "error while adding Parents data"
+                                Error: err.message,
+                                type: "error while adding Parents data in registration"
                             })
                         })
                   }})
@@ -85,8 +85,8 @@ module.exports.parents_registration = (req, res) => {
             console.log(err)
             res.status(500).json({
                 status: 500,
-                Error: err,
-                type: "error while adding Parents data"
+                Error: err.message,
+                type: "error while adding Parents data middle"
             })
         })
     }
@@ -94,8 +94,8 @@ module.exports.parents_registration = (req, res) => {
         console.log(Err)
         res.status(500).json({
             status: 500,
-            Error: Err,
-            type: "error while adding Parents data"
+            Error: Err.message,
+            type: "error while adding Parents data outside"
         })
     }
 }
