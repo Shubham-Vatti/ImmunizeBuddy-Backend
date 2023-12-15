@@ -95,6 +95,7 @@ module.exports.parents_registration = (req, res) => {
         res.status(500).json({
             status: 500,
             Error: Err.message,
+            files,
             type: "error while adding Parents data outside"
         })
     }
