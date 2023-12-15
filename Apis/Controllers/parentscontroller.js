@@ -29,7 +29,7 @@ module.exports.parents_registration = (req, res) => {
         const data=req.UserData;
         console.log('--user id--',typeof(data.sub))
         parentsmodel.find({user_id:data.sub}).then((resul)=>{
-            console.log(resul)
+            console.log('--result--',resul)
             if(!resul.length>0)
             {
                 cloudinary.uploader.upload(files.tempFilePath,(err,result)=>{
@@ -85,6 +85,7 @@ module.exports.parents_registration = (req, res) => {
             console.log(err)
             res.status(500).json({
                 status: 500,
+                Error: err,
                 type: "error while adding Parents data"
             })
         })
@@ -93,6 +94,7 @@ module.exports.parents_registration = (req, res) => {
         console.log(Err)
         res.status(500).json({
             status: 500,
+            Error: Err,
             type: "error while adding Parents data"
         })
     }
