@@ -55,17 +55,17 @@ babyvaccineapprovalroute.get('/get-approval-data', (req, res) => {
 })
 
 
-babyvaccineapprovalroute.post('/Update-Aprroval-rejection-data/:id', requireauth, async (req, res) => {
-    const id = req.params.id;
-    const data = req.UserData;
+babyvaccineapprovalroute.post('/Update-Aprroval-rejection-data', async (req, res) => {
+    const id = req.query.id;
+    // const data = req.UserData;
     const files = req.files.pic;
     console.log(files)
+    const userid=req.query.uid
     // const data = req.UserData;
     // console.log('--', id, '--', data, '--=--=--', data.sub)
     const vData = await Babyvaccineapproval.findById(id)
     {vData.Assigned_user.length!=0?vData.Assigned_user.map(async (ele) => {
-    if (ele.userId == data.sub) {
-
+    if (ele.userId == userid) {
         res.status(201).json({
             type: "already assigned"
         });
@@ -80,7 +80,7 @@ babyvaccineapprovalroute.post('/Update-Aprroval-rejection-data/:id', requireauth
         }
         else if (result) {
             vData.Assigned_user.push({
-                userId: data.sub,
+                userId: userid,
                 url: result.secure_url
             })
             await vData.save()
@@ -97,7 +97,7 @@ babyvaccineapprovalroute.post('/Update-Aprroval-rejection-data/:id', requireauth
         }
         else if (result) {
             vData.Assigned_user.push({
-                userId: data.sub,
+                userId: userid,
                 url: result.secure_url
             })
             await vData.save()
