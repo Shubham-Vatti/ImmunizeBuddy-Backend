@@ -40,7 +40,10 @@ childdoctorroute.post('/doctor-registration',(req,res)=>{
             doctor_pic:result.secure_url,
             country_code:req.body.country_code,
             doctor_city:req.body.city,
-            doctor_state:req.body.state
+            doctor_state:req.body.state,
+            dr_experience:req.body.experience,
+            dr_rating:req.body.rating,
+            patient_checked:req.body.checked
         })
         childoctordata.save().then((resul)=>{
           res.status(200).json({

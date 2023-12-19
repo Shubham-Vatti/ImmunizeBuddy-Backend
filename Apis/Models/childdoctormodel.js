@@ -12,7 +12,10 @@ const childdoctormodel=new mongoose.Schema({
     doctor_mobileno:{type:Number, required:[true,'doctor contact required']},
     doctor_city:{type:String, required:[true,'doctor city required']},
     doctor_state:{type:String, required:[true,'doctor state required']},
-    doctor_bio:{type:String,required:[true]}
+    doctor_bio:{type:String,required:[true]},
+    dr_experience:{type:String},
+    patient_checked:{type:String},
+    dr_rating:{type:String}
 });
 
 
