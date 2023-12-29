@@ -58,24 +58,61 @@ babyvaccineapprovalroute.get("/Get-Approval-Rejection",async(req,res)=>{
     
     const id = req.query.id;
     const userid=req.query.uid
-    const vData = await Babyvaccineapproval.findById(id);
+    Babyvaccineapproval.find()
+        .then((result) => {
+            for(let i=0;i<result.length;++i)
+            {
+                res.status(200).json({
+                    status: 200,
+                    // count: result.length,
+                    // type: "Sucessfully Data gets",
+                    Vaccine_List: result[i]
+                })
+            }
+            // result.map((ele)=>{
+            //     // res.setHeader('Content-Type', 'text/plain');
+            //     res.status(200).json({
+            //         Vaccine_name:ele.Vaccine_name,
+            //         vaccine_Details:ele.Vaccine_Details,
+            //         // Vaccine_Approval:
+            //         // ele.Assigned_user.map((userele)=>{
+            //         //     if(userele.userId==userid)
+            //         //     {
+            //         //         return "Approved"
+            //         //     }
+            //         //     else{
+            //         //         return "Not Approved"
+            //         //     }
+            //         // })
+            //     })
+            // })
+            // res.status(200).json({
+            //     status: 200,
+            //     count: result.length,
+            //     type: "Sucessfully Data gets",
+            //     Vaccine_List: result
+            // })
+        })
+    // console.log(userid)
+    
+    // const vData = await Babyvaccineapproval.find({_id:});
     // console.log(vData.Assigned_user)
-    {vData.Assigned_user.length!=0&&vData.Assigned_user.map((ele)=>{
-        if(ele.userId==userid)    
-        {
-            // console.log('---data--',ele)
-            res.status(200).json({
-                status:200,
-                // data:ele,
-                type: "already assigned"
-            });
-        }
-        else{
-            res.status(200).json({
-                type:"Not Assigned"
-            })
-        }
-    })}
+    // {vData.Assigned_user.length!=0&&vData.Assigned_user.map((ele)=>{
+    //     if(ele.userId==userid)    
+    //     {
+    //         // console.log('---data--',ele)
+    //         res.status(200).json({
+    //             status:200,
+    //             // data:ele,
+    //             type: "already assigned"
+    //         });
+    //     }
+    //     else{
+    //         res.status(200).json({
+    //             type:"Not Assigned"
+    //         })
+    //     }
+    // })}
 
 })
 
